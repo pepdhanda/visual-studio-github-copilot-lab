@@ -9,7 +9,7 @@ In this section, you'll use Copilot Vision. You can share screenshots of errors 
 
 1. [] Ask: `Update the Products.razor to display products in a grid layout similar to this image. Add nice hover effects and make it responsive.`
 1. [] Review the suggested code changes and implement them. It should recommend changes to both the **Products.razor** and a new **Products.razor.css**
-1. [] Run the application to see the updated product grid layout. You may have to clear the browser cashe with CTRL+SHIFT+R if you don't see the css update.
+1. [] Run the application to see the updated product grid layout. You may have to clear the browser cache with CTRL+SHIFT+R if you don't see the CSS update.
 
 > Note: continue to iterate with Copilot Agent if it isn't to your liking.
 

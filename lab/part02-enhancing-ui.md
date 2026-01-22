@@ -7,7 +7,7 @@ Now, you'll improve the loading experience using Copilot's inline chat.
 1. [] In the **Solution explorer** under the **Store** project open **Components/Pages/Products.razor**.
 1. [] Find the "Loading..." text in the code.
 1. [] Select this text and right-click.
-1. [] Choose "Ask Copilot" or press `Alt+/`.
+1. [] Choose "Chat" or press `Alt+/`.
 1. [] In the inline chat, type: `Update this razor to have a simple spinner style, using built in bootstrap styles.`
 
     ![Screenshot of VS with inline chat](./images/2-inline-code.png)

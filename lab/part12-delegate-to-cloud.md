@@ -70,7 +70,7 @@ Before delegating to the cloud, it's important to write a clear, detailed prompt
    ![Delegate to Cloud button](./images/12-delegate-cloud.png)
 1. The cloud agent will acknowledge the request and begin processing it.
 1. [] You will be prompted to confirm the delegation and create an issue. Click **Confirm** to proceed.
-1. [] After the issues has been created you will be able to view the pull request for the changes in in Visual Studio or on GitHub.
+1. [] After the issue has been created you will be able to view the pull request for the changes in in Visual Studio or on GitHub.
   ![View Pull Request](./images/12-view-pull-request.png)
 
 1. When viewing on GitHub, you can see the proposed changes in the pull request, and view the session to see it in realtime.
@@ -85,7 +85,7 @@ After submitting, you'll see a confirmation that your task has been delegated. Y
 1. [] Receive a notification when the task is complete.
 
 > [!TIP]
-> Cloud Agent tasks typically takes several minutes to complete, depending on the complexity of the request. 
+> Cloud Agent tasks typically take several minutes to complete, depending on the complexity of the request. 
 
 
 ## Testing the Dark Theme
