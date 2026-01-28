@@ -608,8 +608,8 @@
         // Process markdown - fix image paths and handle special syntax
         function processMarkdown(md) {
             // Fix image paths - images are in lab/images/
-            md = md.replace(/!\[([^\]]*)\]\(\.\/images\//g, '![$1](../lab/images/');
-            md = md.replace(/!\[([^\]]*)\]\(images\//g, '![$1](../lab/images/');
+            md = md.replace(/!\[([^\]]*)\]\(\.\/images\//g, '![$1](lab/images/');
+            md = md.replace(/!\[([^\]]*)\]\(images\//g, '![$1](lab/images/');
             
             // Convert GitHub-style checkboxes: 1. [] becomes checkbox
             md = md.replace(/^(\d+)\.\s*\[\s*\]\s*/gm, '$1. <input type="checkbox"> ');
@@ -639,8 +639,8 @@
             document.title = `${step.title} | VS GitHub Copilot Lab`;
 
             try {
-                // Fetch markdown from lab folder
-                const response = await fetch(`../lab/${step.file}`);
+                // Fetch markdown from lab folder (copied to docs/lab during deploy)
+                const response = await fetch(`lab/${step.file}`);
                 if (!response.ok) throw new Error('Failed to load');
                 
                 let md = await response.text();
