@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Studio GitHub Copilot Lab | .NET Edition</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-card: #12121a;
+            --vs-purple: #68217a;
+            --vs-blue: #0078d4;
+            --neon-purple: #b366ff;
+            --neon-blue: #00d4ff;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --border-color: #2a2a3a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Animated grid background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(90deg, rgba(104,33,122,0.03) 1px, transparent 1px),
+                linear-gradient(rgba(104,33,122,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 6rem 0 4rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(104,33,122,0.2);
+            border: 1px solid var(--vs-purple);
+            border-radius: 50px;
+            font-size: 0.875rem;
+            color: var(--neon-purple);
+            margin-bottom: 2rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--vs-purple), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--vs-purple), var(--vs-blue));
+            color: var(--text-primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(104,33,122,0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--neon-purple);
+            color: var(--neon-purple);
+        }
+
+        /* Stats */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--neon-purple);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: var(--vs-purple);
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Workshop Parts */
+        .workshop {
+            padding: 4rem 0;
+        }
+
+        .parts-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .part-card {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .part-card:hover {
+            border-color: var(--neon-blue);
+            background: rgba(0,212,255,0.05);
+        }
+
+        .part-number {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--vs-purple), var(--vs-blue));
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--text-primary);
+            flex-shrink: 0;
+        }
+
+        .part-content {
+            flex: 1;
+        }
+
+        .part-content h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .part-content p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .part-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(179,102,255,0.1);
+            border-radius: 50px;
+            color: var(--neon-purple);
+            white-space: nowrap;
+        }
+
+        /* Key Concepts */
+        .concepts {
+            padding: 4rem 0;
+        }
+
+        .concepts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .concept-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .concept-card h4 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--neon-blue);
+        }
+
+        .concept-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .concept-card a {
+            color: var(--neon-purple);
+            text-decoration: none;
+            font-size: 0.875rem;
+        }
+
+        .concept-card a:hover {
+            text-decoration: underline;
+        }
+
+        /* Prerequisites */
+        .prereqs {
+            padding: 4rem 0;
+            background: var(--bg-card);
+        }
+
+        .prereqs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .prereq-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: var(--bg-dark);
+            border-radius: 8px;
+        }
+
+        .prereq-check {
+            color: var(--neon-blue);
+            font-size: 1.25rem;
+        }
+
+        /* Resources */
+        .resources {
+            padding: 4rem 0;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .resource-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .resource-card:hover {
+            border-color: var(--vs-blue);
+            transform: translateY(-2px);
+        }
+
+        .resource-card h4 {
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .resource-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--neon-purple);
+        }
+
+        .footer-credit {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 4rem 0 3rem;
+            }
+
+            .stats {
+                gap: 2rem;
+            }
+
+            .part-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .part-badge {
+                margin-top: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero -->
+        <section class="hero">
+            <span class="hero-badge">🚀 .NET 10 + Blazor + Visual Studio 2026</span>
+            <h1>GitHub Copilot in Visual Studio</h1>
+            <p class="hero-subtitle">
+                Build a TinyShop e-commerce app while mastering GitHub Copilot in Visual Studio 2026. 
+                Learn code completion, Agent mode, MCP servers, and AI-first development workflows.
+            </p>
+            <div class="hero-cta">
+                <a href="https://github.com/dotnet-presentations/visual-studio-github-copilot-lab" class="btn btn-primary">
+                    📦 Get Started
+                </a>
+                <a href="https://github.com/dotnet-presentations/visual-studio-github-copilot-lab/blob/main/lab/setup.md" class="btn btn-secondary">
+                    📖 View Lab Guide
+                </a>
+            </div>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-value">~2hr</div>
+                    <div class="stat-label">Duration</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">13</div>
+                    <div class="stat-label">Parts</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">2</div>
+                    <div class="stat-label">Projects</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section class="features">
+            <h2 class="section-title">What You'll Learn</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">✨</div>
+                    <h3>Code Completion</h3>
+                    <p>Experience intelligent ghost text suggestions and Next Edit Suggestions (NES) as you type code in real-time.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>Agent Mode</h3>
+                    <p>Let Copilot make multi-file changes, install packages, and implement complete features autonomously.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔌</div>
+                    <h3>MCP Servers</h3>
+                    <p>Extend Copilot's capabilities with Model Context Protocol servers for docs, GitHub, and more.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">☁️</div>
+                    <h3>Cloud Delegation</h3>
+                    <p>Offload complex tasks to the cloud while you focus on other work, then review the results.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Workshop Parts -->
+        <section class="workshop">
+            <h2 class="section-title">Workshop Parts</h2>
+            <div class="parts-list">
+                <a href="https://github.com/dotnet-presentations/visual-studio-github-copilot-lab/blob/main/lab/setup.md" class="part-card">
+                    <div class="part-number">00</div>
+                    <div class="part-content">
+                        <h3>Setup & Configuration</h3>
+                        <p>Clone the repo, install extensions, and configure GitHub Copilot settings</p>
+                    </div>
+                    <span class="part-badge">Setup</span>
+                </a>
+                <a href="https://github.com/dotnet-presentations/visual-studio-github-copilot-lab/blob/main/lab/part00-exploring-codebase.md" class="part-card">
+                    <div class="part-number">01</div>
+                    <div class="part-content">
+                        <h3>Exploring the Codebase</h3>
+                        <p>Use Copilot Chat to understand the project structure and architecture</p>
+                    </div>
+                    <span class="part-badge">Chat</span>
+                </a>
+                <a href="https://github.com/dotnet-presentations/visual-studio-github-copilot-lab/blob/main/lab/part01-code-completion.md" class="part-card">
+                    <div class="part-number">02</div>
+                    <div class="part-content">
+                        <h3>Code Completion & Ghost Text</h3>
+                        <p>Implement API endpoints with intelligent code suggestions and NES</p>
+                    </div>
+                    <span class="part-badge">Completions</span>
+                </a>
+                <a href="https://github.com/dotnet-presentations/visual-studio-github-copilot-lab/blob/main/lab/part02-enhancing-ui.md" class="part-card">
+                    <div class="part-number">03</div>
+                    <div class="part-content">
+                        <h3>Enhancing UI with Inline Chat</h3>
+                        <p>Make targeted UI improvements using inline chat (Alt+/)</p>
+                    </div>
+                    <span class="part-badge">Inline</span>
+                </a>
+                <a href="https://github.com/dotnet-presentations/visual-studio-github-copilot-lab/blob/main/lab/part03-referencing-files.md" class="part-card">
+                    <div class="part-number">04</div>
+                    <div class="part-content">
+                        <h3>Referencing Code Files</h3>
+                        <p>Use # references to give Copilot context from specific files</p>
+                    </div>
+                    <span class="part-badge">Context</span>
+                </a>
+                <a href="https://github.com/dotnet-presentations/visual-studio-github-copilot-lab/blob/main/lab/part04-custom-instructions.md" class="part-card">
+                    <div class="part-number">05</div>
+                    <div class="part-content">
+                        <h3>Custom Instructions</h3>
+                        <p>Configure copilot-instructions.md to align suggestions with your standards</p>
+                    </div>
+                    <span class="part-badge">Instructions</span>
+                </a>
+                <a href="https://github.com/dotnet-presentations/visual-studio-github-copilot-lab/blob/main/lab/part05-implementing-features.md" class="part-card">
+                    <div class="part-number">06</div>
+                    <div class="part-content">
+                        <h3>Implementing Features with Agent</h3>
+                        <p>Build complete features across multiple files using Agent mode</p>
+                    </div>
+                    <span class="part-badge">Agent</span>
+                </a>
+                <a href="https://github.com/dotnet-presentations/visual-studio-github-copilot-lab/blob/main/lab/part06-copilot-vision.md" class="part-card">
+                    <div class="part-number">07</div>
+                    <div class="part-content">
+                        <h3>Copilot Vision</h3>
+                        <p>Upload design mockups and let Copilot implement the UI</p>
+                    </div>
+                    <span class="part-badge">Vision</span>
+                </a>
+                <a href="https://github.com/dotnet-presentations/visual-studio-github-copilot-lab/blob/main/lab/part07-debugging-with-copilot.md" class="part-card">
+                    <div class="part-number">08</div>
+                    <div class="part-content">
+                        <h3>Debugging with Copilot</h3>
+                        <p>Analyze exceptions, inspect variables, and generate debug expressions</p>
+                    </div>
+                    <span class="part-badge">Debug</span>
+                </a>
+                <a href="https://github.com/dotnet-presentations/visual-studio-github-copilot-lab/blob/main/lab/part08-commit-summary-descriptions.md" class="part-card">
+                    <div class="part-number">09</div>
+                    <div class="part-content">
+                        <h3>Commit Summaries & Code Review</h3>
+                        <p>Generate meaningful commit messages and review code quality</p>
+                    </div>
+                    <span class="part-badge">Git</span>
+                </a>
+                <a href="https://github.com/dotnet-presentations/visual-studio-github-copilot-lab/blob/main/lab/part09-mcp.md" class="part-card">
+                    <div class="part-number">10</div>
+                    <div class="part-content">
+                        <h3>MCP Servers</h3>
+                        <p>Connect to GitHub, Microsoft Learn, and other external services</p>
+                    </div>
+                    <span class="part-badge">MCP</span>
+                </a>
+                <a href="https://github.com/dotnet-presentations/visual-studio-github-copilot-lab/blob/main/lab/part10-planning-mode.md" class="part-card">
+                    <div class="part-number">11</div>
+                    <div class="part-content">
+                        <h3>Planning Mode</h3>
+                        <p>Create structured implementation plans before generating code</p>
+                    </div>
+                    <span class="part-badge">Planning</span>
+                </a>
+                <a href="https://github.com/dotnet-presentations/visual-studio-github-copilot-lab/blob/main/lab/part11-reusable-prompts.md" class="part-card">
+                    <div class="part-number">12</div>
+                    <div class="part-content">
+                        <h3>Reusable Prompt Files</h3>
+                        <p>Create standardized prompts for unit testing and common tasks</p>
+                    </div>
+                    <span class="part-badge">Prompts</span>
+                </a>
+                <a href="https://github.com/dotnet-presentations/visual-studio-github-copilot-lab/blob/main/lab/part12-delegate-to-cloud.md" class="part-card">
+                    <div class="part-number">13</div>
+                    <div class="part-content">
+                        <h3>Delegate to the Cloud</h3>
+                        <p>Offload complex tasks to cloud agents and review pull requests</p>
+                    </div>
+                    <span class="part-badge">Cloud</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Key Concepts -->
+        <section class="concepts">
+            <h2 class="section-title">Key Concepts & Documentation</h2>
+            <div class="concepts-grid">
+                <div class="concept-card">
+                    <h4>💬 Copilot Chat Modes</h4>
+                    <p>Switch between Ask, Edit, and Agent modes for different workflows—from quick questions to multi-file changes.</p>
+                    <a href="https://learn.microsoft.com/visualstudio/ide/copilot-chat-context" target="_blank">Learn more →</a>
+                </div>
+                <div class="concept-card">
+                    <h4>📝 Custom Instructions</h4>
+                    <p>Use copilot-instructions.md to provide project-wide context about your codebase, standards, and preferences.</p>
+                    <a href="https://learn.microsoft.com/visualstudio/ide/copilot-customize-copilot" target="_blank">Learn more →</a>
+                </div>
+                <div class="concept-card">
+                    <h4>🔌 Model Context Protocol</h4>
+                    <p>MCP servers extend Copilot's capabilities by connecting to external tools, documentation, and services.</p>
+                    <a href="https://learn.microsoft.com/visualstudio/ide/copilot-mcp-overview" target="_blank">Learn more →</a>
+                </div>
+                <div class="concept-card">
+                    <h4>📋 Prompt Files</h4>
+                    <p>Create reusable, standardized prompts in .github/prompts to share best practices across your team.</p>
+                    <a href="https://learn.microsoft.com/visualstudio/ide/copilot-prompts-files" target="_blank">Learn more →</a>
+                </div>
+                <div class="concept-card">
+                    <h4>☁️ Copilot Coding Agent</h4>
+                    <p>Delegate tasks to cloud-based agents that can create PRs while you focus on other work.</p>
+                    <a href="https://learn.microsoft.com/visualstudio/ide/copilot-agent-mode" target="_blank">Learn more →</a>
+                </div>
+                <div class="concept-card">
+                    <h4>👁️ Copilot Vision</h4>
+                    <p>Upload images of UI designs, errors, or diagrams and let Copilot help implement or debug them.</p>
+                    <a href="https://learn.microsoft.com/visualstudio/ide/copilot-vision" target="_blank">Learn more →</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Prerequisites -->
+    <section class="prereqs">
+        <div class="container">
+            <h2 class="section-title">Prerequisites</h2>
+            <div class="prereqs-grid">
+                <div class="prereq-item">
+                    <span class="prereq-check">✓</span>
+                    <span>Visual Studio 2026</span>
+                </div>
+                <div class="prereq-item">
+                    <span class="prereq-check">✓</span>
+                    <span>GitHub Copilot</span>
+                </div>
+                <div class="prereq-item">
+                    <span class="prereq-check">✓</span>
+                    <span>.NET 10 SDK</span>
+                </div>
+                <div class="prereq-item">
+                    <span class="prereq-check">✓</span>
+                    <span>Git installed</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <!-- Resources -->
+        <section class="resources">
+            <h2 class="section-title">Additional Resources</h2>
+            <div class="resources-grid">
+                <a href="https://learn.microsoft.com/visualstudio/ide/visual-studio-github-copilot-extension" class="resource-card" target="_blank">
+                    <h4>📚 Copilot Extension Docs</h4>
+                    <p>Official documentation for GitHub Copilot in Visual Studio</p>
+                </a>
+                <a href="https://learn.microsoft.com/visualstudio/ide/ai-assisted-development-visual-studio" class="resource-card" target="_blank">
+                    <h4>🧠 AI-Assisted Development</h4>
+                    <p>Overview of AI features in Visual Studio 2026</p>
+                </a>
+                <a href="https://github.com/github/copilot-docs" class="resource-card" target="_blank">
+                    <h4>📖 GitHub Copilot Docs</h4>
+                    <p>Comprehensive documentation from GitHub</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-links">
+                <a href="https://github.com/dotnet-presentations/visual-studio-github-copilot-lab">GitHub Repository</a>
+                <a href="https://learn.microsoft.com/visualstudio/">Visual Studio Docs</a>
+                <a href="https://github.com/features/copilot">GitHub Copilot</a>
+                <a href="https://dotnet.microsoft.com/">.NET</a>
+            </div>
+            <p class="footer-credit">
+                Built with 💜 by the Visual Studio & .NET Teams
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
