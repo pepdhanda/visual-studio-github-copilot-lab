@@ -1,9 +1,9 @@
 # Part 06: Using Copilot Vision
 
-In this section, you'll use Copilot Vision. You can share screenshots of errors and Copilot will interpret the image and resolve the issue. Or share mockups of new designs, and Vision will help you bring them to life. Let's update our design based on a photo our design gave us.
+In this section, you'll use Copilot Vision. You can share screenshots of errors and Copilot will interpret the image and resolve the issue. Or share mockups of new designs, and Vision will help you bring them to life. Let's update our design based on a photo our designer gave us.
 
 1. [] Open a new Copilot Chat thread in Agent mode.
-1. [] Click the **+** button in the chat, select **upload image**, and select the store application image that is found in the GitHub repo that is cloned called **eshop.png** inside of the `C:\Users\LabUser\Source\Repos\build-2025-lab300` directory.
+1. [] Click the **+** button in the chat, select **upload image**, and select the **eshop.png** image found in the root of the cloned repository.
 
     ![Attach image icon](./images/6-add-image.png)
 
@@ -11,7 +11,8 @@ In this section, you'll use Copilot Vision. You can share screenshots of errors 
 1. [] Review the suggested code changes and implement them. It should recommend changes to both the **Products.razor** and a new **Products.razor.css**
 1. [] Run the application to see the updated product grid layout. You may have to clear the browser cache with CTRL+SHIFT+R if you don't see the CSS update.
 
-> Note: continue to iterate with Copilot Agent if it isn't to your liking.
+> [!NOTE]
+> Continue to iterate with Copilot Agent if the result isn't to your liking.
 
 **Key Takeaway**: Copilot Vision can understand UI designs from images and help you implement them in your application.
 
