@@ -1,0 +1,53 @@
+@page "/product/{Id:int}"
+@using DataEntities
+@using Store.Services
+@inject IConfiguration Configuration
+@inject ProductService ProductService
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+@attribute [StreamRendering(true)]
+
+<PageTitle>@(product?.Name ?? "Product Details")</PageTitle>
+
+@if (product == null)
+{
+    <div class="d-flex justify-content-center align-items-center my-5" role="status" aria-live="polite">
+        <div class="spinner-border me-2" role="status" aria-hidden="true"></div>
+        <span>Loading...</span>
+    </div>
+}
+else
+{
+    <div class="product-detail">
+        <div class="product-detail-image">
+            <img src="@(imagePrefix + product.ImageUrl)" alt="@product.Name" />
+        </div>
+        <div class="product-detail-info">
+            <h1 class="product-detail-name">@product.Name</h1>
+            <p class="product-detail-description">@product.Description</p>
+            <div class="product-detail-price">@product.Price.ToString("C")</div>
+            <button class="btn btn-secondary mt-4" @onclick="NavigateBack">
+                <span>? Back to Products</span>
+            </button>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private Product? product;
+    private string imagePrefix = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        imagePrefix = Configuration["ImagePrefix"]!;
+        product = await ProductService.GetProductById(Id);
+    }
+
+    private void NavigateBack()
+    {
+        Navigation.NavigateTo("/products");
+    }
+}

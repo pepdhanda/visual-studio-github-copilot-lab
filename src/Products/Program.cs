@@ -20,7 +20,7 @@ app.UseHttpsRedirection();
 
 app.MapProductEndpoints();
 
-app.UseStaticFiles();
+app.MapStaticAssets();  // Replaces app.UseStaticFiles();
 
 app.CreateDbIfNotExists();
 
