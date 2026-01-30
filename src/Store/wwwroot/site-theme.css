@@ -41,16 +41,23 @@
     --topbar-bg: rgba(15, 52, 96, 0.6);
 }
 
-/* Apply theme colors with smooth transitions */
-* {
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
+/* Apply theme colors with smooth transitions to specific elements */
 body, html {
     background-color: var(--bg-primary);
     color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 main {
     background-color: var(--bg-primary);
+    transition: background-color 0.3s ease;
+}
+
+.product-card,
+.sidebar,
+.nav-item a,
+.btn,
+.product-image-container,
+.product-overlay {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }

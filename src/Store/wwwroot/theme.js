@@ -2,7 +2,12 @@
 window.themeManager = {
     init: function() {
         // Load theme from localStorage or default to light
-        const savedTheme = localStorage.getItem('theme') || 'light';
+        let savedTheme = 'light';
+        try {
+            savedTheme = localStorage.getItem('theme') || 'light';
+        } catch (e) {
+            console.warn('localStorage not available, using default theme');
+        }
         this.setTheme(savedTheme);
     },
     
@@ -15,7 +20,11 @@ window.themeManager = {
     
     setTheme: function(theme) {
         document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem('theme', theme);
+        try {
+            localStorage.setItem('theme', theme);
+        } catch (e) {
+            console.warn('localStorage not available, theme will not persist');
+        }
     },
     
     getTheme: function() {
