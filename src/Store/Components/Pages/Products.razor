@@ -1,7 +1,17 @@
-﻿@page "/products"
+﻿@* 
+PSEUDOCODE / PLAN:
+- When `products` is null, render a simple Bootstrap spinner centered on the page.
+- Use `d-flex`, `justify-content-center`, and `align-items-center` for centering.
+- Use `spinner-border` for the built-in Bootstrap spinner and include accessible text.
+- Keep the existing "else" branch as-is (placeholder for products table).
+- Ensure accessibility attributes: `role="status"` and `aria-live="polite"`.
+*@
+
+@page "/products"
 @using DataEntities
 @using Store.Services
 @inject IConfiguration Configuration
+@inject ProductService ProductService
 @rendermode InteractiveServer
 @attribute [StreamRendering(true)]
 
@@ -13,13 +23,31 @@
 
 @if (products == null)
 {
-    <p><em>Loading...</em></p>
+    <div class="d-flex justify-content-center align-items-center my-5" role="status" aria-live="polite">
+        <div class="spinner-border me-2" role="status" aria-hidden="true"></div>
+        <span>Loading...</span>
+    </div>
 }
 else
 {
-    <!--Implement Products table here-->
-    <p>Under construction...</p>
-
+    <div class="product-grid">
+        @foreach (var product in products)
+        {
+            <div class="product-card">
+                <div class="product-image-container">
+                    <img src="@(imagePrefix + product.ImageUrl)" alt="@product.Name" />
+                    <div class="product-overlay">
+                        <button class="btn btn-light btn-sm" aria-label="View details for @product.Name">View Details</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h5 class="product-name">@product.Name</h5>
+                    <p class="product-description">@product.Description</p>
+                    <div class="product-price">@product.Price.ToString("C")</div>
+                </div>
+            </div>
+        }
+    </div>
 }
 
 @code {
@@ -28,10 +56,8 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        // Simulate asynchronous loading to demonstrate streaming rendering
-        await Task.Delay(500);
         imagePrefix = Configuration["ImagePrefix"]!;
-        products = [];
+        products = await ProductService.GetProducts();
     }
 
 }
