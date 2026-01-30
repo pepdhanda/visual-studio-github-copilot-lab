@@ -30,16 +30,32 @@
     {
         if (firstRender)
         {
-            var theme = await JSRuntime.InvokeAsync<string>("themeManager.getTheme");
-            isDarkTheme = theme == "dark";
-            StateHasChanged();
+            try
+            {
+                var theme = await JSRuntime.InvokeAsync<string>("themeManager.getTheme");
+                isDarkTheme = theme == "dark";
+                StateHasChanged();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error getting theme: {ex.Message}");
+                // Default to light theme if JS is not available
+                isDarkTheme = false;
+            }
         }
     }
 
     private async Task ToggleTheme()
     {
-        var newTheme = await JSRuntime.InvokeAsync<string>("themeManager.toggleTheme");
-        isDarkTheme = newTheme == "dark";
+        try
+        {
+            var newTheme = await JSRuntime.InvokeAsync<string>("themeManager.toggleTheme");
+            isDarkTheme = newTheme == "dark";
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error toggling theme: {ex.Message}");
+        }
     }
 
     private string GetThemeToggleTitle()
