@@ -1,0 +1,56 @@
+/* Theme Color Custom Properties */
+:root {
+    /* Light Theme (Default) */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --text-primary: #212529;
+    --text-secondary: #6c757d;
+    --accent-color: #0071c1;
+    --highlight-color: #1b6ec2;
+    --border-color: #d6d5d5;
+    --card-bg: #ffffff;
+    --card-shadow: rgba(0, 0, 0, 0.08);
+    --card-shadow-hover: rgba(0, 0, 0, 0.15);
+    --overlay-bg: rgba(0, 0, 0, 0.4);
+    --sidebar-gradient-start: rgb(5, 39, 103);
+    --sidebar-gradient-end: #3a0647;
+    --nav-item-color: #d7d7d7;
+    --nav-item-active-bg: rgba(255, 255, 255, 0.25);
+    --nav-item-hover-bg: rgba(255, 255, 255, 0.1);
+    --topbar-bg: rgba(0, 0, 0, 0.4);
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+    --bg-primary: #1a1a2e;
+    --bg-secondary: #16213e;
+    --text-primary: #eaeaea;
+    --text-secondary: #b0b0b0;
+    --accent-color: #0f3460;
+    --highlight-color: #e94560;
+    --border-color: #2a2a3e;
+    --card-bg: #16213e;
+    --card-shadow: rgba(0, 0, 0, 0.3);
+    --card-shadow-hover: rgba(0, 0, 0, 0.5);
+    --overlay-bg: rgba(0, 0, 0, 0.6);
+    --sidebar-gradient-start: #0f3460;
+    --sidebar-gradient-end: #1a1a2e;
+    --nav-item-color: #eaeaea;
+    --nav-item-active-bg: rgba(233, 69, 96, 0.3);
+    --nav-item-hover-bg: rgba(233, 69, 96, 0.1);
+    --topbar-bg: rgba(15, 52, 96, 0.6);
+}
+
+/* Apply theme colors with smooth transitions */
+* {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+body, html {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+main {
+    background-color: var(--bg-primary);
+}

@@ -8,11 +8,11 @@
 }
 
 .product-detail-image {
-    background: #f8f9fa;
+    background: var(--bg-secondary);
     border-radius: 12px;
     overflow: hidden;
     aspect-ratio: 4 / 3;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px var(--card-shadow);
 }
 
 .product-detail-image img {
@@ -30,13 +30,13 @@
 .product-detail-name {
     font-size: 2.5rem;
     font-weight: 700;
-    color: #212529;
+    color: var(--text-primary);
     margin-bottom: 1rem;
 }
 
 .product-detail-description {
     font-size: 1.1rem;
-    color: #6c757d;
+    color: var(--text-secondary);
     line-height: 1.7;
     margin-bottom: 1.5rem;
 }
@@ -44,7 +44,7 @@
 .product-detail-price {
     font-size: 2rem;
     font-weight: 700;
-    color: #198754;
+    color: var(--highlight-color);
 }
 
 @media (max-width: 768px) {
